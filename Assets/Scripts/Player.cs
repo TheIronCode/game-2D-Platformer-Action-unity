@@ -6,6 +6,12 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
 
+
+    [Header("Attack details")]
+    [SerializeField] private float attackRadius;
+    [SerializeField] private Transform attackPoint;
+    [SerializeField] private LayerMask whatIsEnemy;
+
     [Header("Movement details")]
     [SerializeField] private float moveSpeed = 3.5f;
     [SerializeField] private float jumpForse = 8f;
@@ -38,6 +44,16 @@ public class Player : MonoBehaviour
         HandleFlip();
         ApplyJumpPhysics();
 
+    }
+
+    public void DamageEnemies()
+    {
+        Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, whatIsEnemy);
+
+        foreach (Collider2D enemy in enemyColliders)
+        {
+            enemy.GetComponent<Enemy>().TakeDamage();
+        }
     }
 
     public void EnableMovementAndJump(bool enable)
@@ -125,5 +141,11 @@ public class Player : MonoBehaviour
         transform.Rotate(0, 180, 0);
 
         isFacingRight = !isFacingRight;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, -groundCheckDistance));
+        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
     }
 }
