@@ -394,8 +394,8 @@ GameObject:
   m_Component:
   - component: {fileID: 320099750}
   - component: {fileID: 320099749}
-  - component: {fileID: 320099748}
   - component: {fileID: 320099747}
+  - component: {fileID: 320099748}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -461,6 +461,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ba6f7bdc226fa64493d8a43716b1584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  redColorDuration: 1
+  currentTimerInGame: 0
+  lastTimeWasDamaged: 0
 --- !u!212 &320099749
 SpriteRenderer:
   serializedVersion: 2
