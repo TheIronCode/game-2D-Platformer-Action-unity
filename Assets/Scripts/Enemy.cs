@@ -1,47 +1,26 @@
 using UnityEngine;
+using UnityEngine.Windows;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Entity
 {
 
-    private SpriteRenderer sr;
-
-    [SerializeField] private float redColorDuration = 1.0f;
-
-    public float currentTimerInGame;
-    public float lastTimeWasDamaged;
-
-    private void Awake()
+    protected override void Update()
     {
-        sr = GetComponent<SpriteRenderer>();
+        HandleCollision();
+        HandleAnimation();
+        HandleMovement();
+        HandleFlip();
     }
 
-    private void Update()
+    protected override void HandleMovement()
     {
-        ChangeColorIfNeeded();
-    }
-
-    private void ChangeColorIfNeeded()
-    {
-        currentTimerInGame = Time.time;
-
-        if (currentTimerInGame > lastTimeWasDamaged + redColorDuration)
+        if (canMove)
         {
-            if (sr.color != Color.white)
-            {
-                TurnWhite();
-            }
+            rb.linearVelocity = new Vector2(facingDir * moveSpeed, rb.linearVelocity.y);
         }
-    }
-
-    public void TakeDamage()
-    {
-        sr.color = Color.red;
-
-        lastTimeWasDamaged = Time.time;
-    }
-
-    private void TurnWhite()
-    {
-        sr.color = Color.white;
+        else
+        {
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+        }
     }
 }

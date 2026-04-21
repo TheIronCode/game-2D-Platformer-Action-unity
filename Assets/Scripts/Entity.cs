@@ -1,25 +1,26 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Entity : MonoBehaviour
 {
 
-    private Rigidbody2D rb;
-    private Animator animator;
+    protected Rigidbody2D rb;
+    protected Animator animator;
 
 
     [Header("Attack details")]
-    [SerializeField] private float attackRadius;
-    [SerializeField] private Transform attackPoint;
-    [SerializeField] private LayerMask whatIsEnemy;
+    [SerializeField] protected float attackRadius;
+    [SerializeField] protected Transform attackPoint;
+    [SerializeField] protected LayerMask whatIsTarget;
 
     [Header("Movement details")]
-    [SerializeField] private float moveSpeed = 3.5f;
+    [SerializeField] protected float moveSpeed = 3.5f;
     [SerializeField] private float jumpForse = 8f;
     [SerializeField] private float fallMultiplier = 2f;
-    private float xInput;
+    protected int facingDir = 1;
+    protected bool canMove = true;
     private bool isFacingRight = true;
-    private bool canMove = true;
     private bool canJump = true;
+    private float xInput;
 
     [Header("Collision details")]
     [SerializeField] private float groundCheckDistance;
@@ -35,7 +36,7 @@ public class Player : MonoBehaviour
     }
 
 
-    void Update()
+    protected virtual void Update()
     {
         HandleCollision();
         HandleInput();
@@ -46,14 +47,20 @@ public class Player : MonoBehaviour
 
     }
 
-    public void DamageEnemies()
+    public void DamageTargets()
     {
-        Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, whatIsEnemy);
+        Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, whatIsTarget);
 
         foreach (Collider2D enemy in enemyColliders)
         {
-            enemy.GetComponent<Enemy>().TakeDamage();
+            Entity entityTarget = enemy.GetComponent<Entity>();
+            entityTarget.TakeDamage();
         }
+    }
+
+    private void TakeDamage()
+    {
+
     }
 
     public void EnableMovementAndJump(bool enable)
@@ -62,7 +69,7 @@ public class Player : MonoBehaviour
         canJump = enable;
     }
 
-    private void HandleAnimation()
+    protected void HandleAnimation()
     {
         animator.SetFloat("yVelocity", rb.linearVelocity.y);
         animator.SetFloat("xVelocity", rb.linearVelocity.x);
@@ -83,7 +90,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void TryToAttack()
+    protected virtual void TryToAttack()
     {
         if (isGrounded)
         {
@@ -99,7 +106,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void HandleMovement()
+    protected virtual void HandleMovement()
     {
         if (canMove)
         {
@@ -111,12 +118,12 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void HandleCollision()
+    protected virtual void HandleCollision()
     {
         isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, whatIsGround);
     }
 
-    private void HandleFlip()
+    protected void HandleFlip()
     {
         if (xInput > 0 && isFacingRight == false)
         {
@@ -141,6 +148,8 @@ public class Player : MonoBehaviour
         transform.Rotate(0, 180, 0);
 
         isFacingRight = !isFacingRight;
+
+        facingDir = facingDir * -1;
     }
 
     private void OnDrawGizmos()
