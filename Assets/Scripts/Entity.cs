@@ -86,11 +86,11 @@ public class Entity : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            TryToAttack();
+            HandleAttack();
         }
     }
 
-    protected virtual void TryToAttack()
+    protected virtual void HandleAttack()
     {
         if (isGrounded)
         {
