@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
@@ -5,7 +6,16 @@ public class Entity : MonoBehaviour
 
     protected Rigidbody2D rb;
     protected Animator animator;
+    protected Collider2D col;
+    protected SpriteRenderer sr;
 
+    [Header("Health")]
+    [SerializeField] private int maxHealth = 1;
+    [SerializeField] private int currentHealth;
+    [SerializeField] private Material damageMaterial;
+    [SerializeField] private float damageFeedbackDuration = .2f;
+    private Coroutine damageFeedbackCoroutine;
+    
 
     [Header("Attack details")]
     [SerializeField] protected float attackRadius;
@@ -32,7 +42,11 @@ public class Entity : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<Collider2D>();
         animator = GetComponentInChildren<Animator>();
+        sr = GetComponentInChildren<SpriteRenderer>();
+
+        currentHealth = maxHealth;
     }
 
 
@@ -60,7 +74,42 @@ public class Entity : MonoBehaviour
 
     private void TakeDamage()
     {
+        currentHealth -= 1;
+        PlayDamageFeedback();
 
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void PlayDamageFeedback()
+    {
+        if (damageFeedbackCoroutine != null)
+        {
+            StopCoroutine(damageFeedbackCoroutine);
+        }
+        StartCoroutine(DamageFeedbackCoroutine());
+    }
+
+    private IEnumerator DamageFeedbackCoroutine()
+    {
+        Material originaMat = sr.material;
+
+        sr.material = damageMaterial;
+
+        yield return new WaitForSeconds(damageFeedbackDuration);
+
+        sr.material = originaMat;
+    }
+
+    protected virtual void Die()
+    {
+        animator.enabled = false;
+        col.enabled = false;
+
+        rb.gravityScale = 12;
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, 15);
     }
 
     public void EnableMovementAndJump(bool enable)
