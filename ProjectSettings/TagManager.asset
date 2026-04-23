@@ -38,6 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Backgrounds
+    uniqueID: 3496887827
+    locked: 0
+  - name: Chahacters
+    uniqueID: 2441254401
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
