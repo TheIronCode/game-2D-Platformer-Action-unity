@@ -28,7 +28,7 @@ public class Entity : MonoBehaviour
     [SerializeField] private float fallMultiplier = 2f;
     protected int facingDir = 1;
     protected bool canMove = true;
-    private bool isFacingRight = true;
+    protected bool isFacingRight = true;
     private bool canJump = true;
     private float xInput;
 
@@ -112,7 +112,7 @@ public class Entity : MonoBehaviour
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, 15);
     }
 
-    public void EnableMovementAndJump(bool enable)
+    public  virtual void EnableMovementAndJumpAndAttack(bool enable)
     {
         canMove = enable;
         canJump = enable;
@@ -172,7 +172,7 @@ public class Entity : MonoBehaviour
         isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, whatIsGround);
     }
 
-    protected void HandleFlip()
+    protected virtual void HandleFlip()
     {
         if (xInput > 0 && isFacingRight == false)
         {
@@ -192,7 +192,7 @@ public class Entity : MonoBehaviour
         }
     }
 
-    private void Flip()
+    protected void Flip()
     {
         transform.Rotate(0, 180, 0);
 
@@ -204,6 +204,10 @@ public class Entity : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, -groundCheckDistance));
-        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+
+        if (attackPoint != null)
+        {
+            Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+        }
     }
 }

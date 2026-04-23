@@ -5,6 +5,8 @@ public class Enemy : Entity
 {
 
     private bool playerDetected;
+    private bool canAttack = true;
+    private float attackCooldown = 1f;
 
     protected override void Update()
     {
@@ -17,10 +19,17 @@ public class Enemy : Entity
 
     protected override void HandleAttack()
     {
-        if(playerDetected)
+        if(playerDetected && canAttack == true)
         {
+            canAttack = false;
             animator.SetTrigger("attack");
         }
+    }
+
+    public override void EnableMovementAndJumpAndAttack(bool enable)
+    {
+        canAttack = enable;
+        canMove = enable;
     }
 
     protected override void HandleMovement()

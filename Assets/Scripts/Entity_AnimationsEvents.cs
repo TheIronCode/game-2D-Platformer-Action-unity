@@ -7,6 +7,7 @@ public class Entity_AnimationsEvents : MonoBehaviour
     private void Awake()
     {
         player = GetComponentInParent<Entity>();
+
     }
 
     public void DamageTargets()
@@ -14,13 +15,13 @@ public class Entity_AnimationsEvents : MonoBehaviour
         player.DamageTargets();
     }
 
-    private void DisableMovementAndJump()
+    private void DisableMovementAndJumpAndAttack()
     {
-        player.EnableMovementAndJump(false);
+        player.EnableMovementAndJumpAndAttack(false);
     }
 
-    private void EnableMovementAndJump()
+    private void EnableMovementAndJumpAndAttack()
     {
-        player.EnableMovementAndJump(true);
+        player.EnableMovementAndJumpAndAttack(true);
     }
 }
