@@ -1,10 +1,12 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour
 {
     public static UI Instance;
 
+    [SerializeField] private GameObject gameOverUI;
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private TextMeshProUGUI killCountText;
 
@@ -13,11 +15,24 @@ public class UI : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        Time.timeScale = 1.0f;
     }
 
     private void Update()
     {
         timerText.text = Time.time.ToString("F2") + "s";
+    }
+
+    public void EnableGameOverUI()
+    {
+        Time.timeScale = .5f;
+        gameOverUI.SetActive(true);
+    }
+
+    public void RestartLevel()
+    {
+        int sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(sceneIndex);
     }
 
     public void AddKillCount()

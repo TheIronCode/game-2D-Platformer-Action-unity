@@ -36,4 +36,10 @@ public class ObjectToProtect : Entity
         }
     }
 
+    protected override void Die()
+    {
+        base.Die();
+        UI.Instance.EnableGameOverUI();
+    }
+
 }
