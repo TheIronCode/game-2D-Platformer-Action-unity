@@ -4,7 +4,15 @@ using UnityEngine.Windows;
 public class ObjectToProtect : Entity
 {
 
-    [SerializeField] private Transform player;
+    private Transform player;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        player = FindFirstObjectByType<Player>().transform;
+
+    }
 
     protected override void Update()
     {
@@ -13,11 +21,16 @@ public class ObjectToProtect : Entity
 
     protected override void HandleFlip()
     {
-        if (player.transform.position.x > transform.position.x && isFacingRight == false)
+        if (player == null)
+        {
+            return;
+        }
+
+        if (player.transform.position.x > transform.position.x && !isFacingRight)
         {
             Flip();
         }
-        else if (player.transform.position.x < transform.position.x && isFacingRight == true)
+        else if (player.transform.position.x < transform.position.x && isFacingRight)
         {
             Flip();
         }

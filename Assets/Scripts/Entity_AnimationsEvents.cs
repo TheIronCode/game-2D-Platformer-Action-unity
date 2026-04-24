@@ -15,13 +15,13 @@ public class Entity_AnimationsEvents : MonoBehaviour
         player.DamageTargets();
     }
 
-    private void DisableMovementAndJumpAndAttack()
+    private void DisableAction()
     {
-        player.EnableMovementAndJumpAndAttack(false);
+        player.EnableAction(false);
     }
 
-    private void EnableMovementAndJumpAndAttack()
+    private void EnableAction()
     {
-        player.EnableMovementAndJumpAndAttack(true);
+        player.EnableAction(true);
     }
 }

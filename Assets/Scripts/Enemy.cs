@@ -4,32 +4,32 @@ using UnityEngine.Windows;
 public class Enemy : Entity
 {
 
+    [Header("Movement details")]
+    [SerializeField] protected float moveSpeed = 3.5f;
+
     private bool playerDetected;
     private bool canAttack = true;
-    private float attackCooldown = 1f;
 
     protected override void Update()
     {
-        HandleCollision();
-        HandleAnimation();
-        HandleMovement();
-        HandleFlip();
+        base.Update();
+
         HandleAttack();
     }
 
     protected override void HandleAttack()
     {
-        if(playerDetected && canAttack == true)
+        if(playerDetected && canAttack)
         {
             canAttack = false;
             animator.SetTrigger("attack");
         }
     }
 
-    public override void EnableMovementAndJumpAndAttack(bool enable)
+    public override void EnableAction(bool enable)
     {
+        base.EnableAction(enable);
         canAttack = enable;
-        canMove = enable;
     }
 
     protected override void HandleMovement()

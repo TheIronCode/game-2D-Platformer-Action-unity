@@ -1109,13 +1109,11 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 256
-  moveSpeed: 2
-  jumpForse: 8
-  fallMultiplier: 2
   groundCheckDistance: 1.2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
+  moveSpeed: 2
 --- !u!4 &758817430
 Transform:
   m_ObjectHideFlags: 0
@@ -1551,14 +1549,10 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 0
-  moveSpeed: 3.5
-  jumpForse: 8
-  fallMultiplier: 2
   groundCheckDistance: 0
   whatIsGround:
     serializedVersion: 2
     m_Bits: 0
-  player: {fileID: 1991457087}
 --- !u!50 &1171735567
 Rigidbody2D:
   serializedVersion: 5
@@ -2068,7 +2062,7 @@ GameObject:
   - component: {fileID: 1991457087}
   - component: {fileID: 1991457085}
   - component: {fileID: 1991457089}
-  - component: {fileID: 1991457088}
+  - component: {fileID: 1991457090}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -2120,34 +2114,6 @@ Transform:
   - {fileID: 1253453165}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1991457088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1991457083}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a43b961763555d344b5103a30f9fa37e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player
-  maxHealth: 5
-  currentHealth: 0
-  damageMaterial: {fileID: 2100000, guid: cdaa8ad212374dd4289a2d04f16f15a6, type: 2}
-  damageFeedbackDuration: 0.1
-  attackRadius: 0.8
-  attackPoint: {fileID: 1253453165}
-  whatIsTarget:
-    serializedVersion: 2
-    m_Bits: 128
-  moveSpeed: 8
-  jumpForse: 12
-  fallMultiplier: 2
-  groundCheckDistance: 1.4
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!70 &1991457089
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -2185,6 +2151,34 @@ CapsuleCollider2D:
   m_Offset: {x: 0.02581811, y: -0.26924706}
   m_Size: {x: 0.7729354, y: 2.113871}
   m_Direction: 0
+--- !u!114 &1991457090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991457083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 778adb4e6ff52164096e69d49f4b1cad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
+  maxHealth: 5
+  currentHealth: 0
+  damageMaterial: {fileID: 2100000, guid: cdaa8ad212374dd4289a2d04f16f15a6, type: 2}
+  damageFeedbackDuration: 0.1
+  attackRadius: 1
+  attackPoint: {fileID: 1253453165}
+  whatIsTarget:
+    serializedVersion: 2
+    m_Bits: 128
+  groundCheckDistance: 1.45
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 64
+  moveSpeed: 6
+  jumpForse: 8
+  fallMultiplier: 2
 --- !u!1 &2115358095
 GameObject:
   m_ObjectHideFlags: 0
