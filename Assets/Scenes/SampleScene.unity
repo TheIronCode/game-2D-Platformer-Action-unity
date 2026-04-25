@@ -3822,7 +3822,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   moveSpeed: 6
-  jumpForse: 8
+  jumpForse: 12
   fallMultiplier: 2
 --- !u!1 &2115358095
 GameObject:
